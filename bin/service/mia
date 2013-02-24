@@ -12,7 +12,7 @@ start() {
     echo
     return 1
   fi
-  daemon ruby lib/server.rb --pidfile ${pidfile}
+  daemon --user karotz --pidfile ${pidfile} "cd /home/karotz/mia/current;/usr/local/bin/ruby lib/server.rb"
   RETVAL=$?
   return $RETVAL
 }

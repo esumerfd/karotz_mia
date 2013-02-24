@@ -29,8 +29,3 @@ task :setup do
   run "mkdir -p #{deploy_to}/releases"
   run "mkdir -p #{deploy_to}/shared/log"
 end
-
-task :inittab do
-  run "#{sudo} cp #{deploy_to}/current/bin/service/mia /etc/init.d"
-end
-
