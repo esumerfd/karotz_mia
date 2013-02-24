@@ -2,31 +2,33 @@
 
 . /etc/init.d/functions
 
-pidfile="/home/karotz/mia/mid.pid"
+pidfile="/home/karotz/mia/mia.pid"
 
 start() {
   echo -n $"Starting Sinatra Mia: "	
-  if [ -e ${pidfile}] && [ -e /proc/`cat ${pidfile}` ]; then
-    echo -n $"cannot start ruby lib/server.rb: it is already running.";
-    failure $"cannot start ruby lib/server.rb: it is already running.";
+  if [ -e ${pidfile} ] && [ -e /proc/`cat ${pidfile}` ]; then
+    echo -n $"cannot start mia: it is already running.";
+    failure $"cannot start mia: it is already running.";
     echo
     return 1
   fi
   daemon --user karotz --pidfile ${pidfile} "cd /home/karotz/mia/current;/usr/local/bin/ruby lib/server.rb"
   RETVAL=$?
+  echo
   return $RETVAL
 }
 
 stop() {
   echo -n $"Stopping Sinatra Mia: "
-  if [ ! -e /var/lock/subsys/crond ]; then
-    echo -n $"cannot stop ruby lib/server.rb: it is not running."
-    failure $"cannot stop ruby lib/server.rb: it is not running."
+  if [ ! -e ${pidfile} ] || [ ! -e /proc/`cat ${pidfile}` ]; then
+    echo -n $"cannot stop mia it is not running."
+    failure $"cannot stop mia it is not running."
     echo
     return 1;
   fi
   killproc -p $pidfile
   RETVAL=$?
+  echo
   return $RETVAL
 }	
 
