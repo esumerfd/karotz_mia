@@ -6,7 +6,7 @@ pidfile="/home/karotz/mia/mia.pid"
 
 start() {
   echo -n $"Starting Sinatra Mia: "	
-  daemon --user karotz "cd /home/karotz/mia/current;GEM_HOME=/home/karotz/.gem /usr/local/bin/ruby lib/server.rb"
+  su karotz -c "cd /home/karotz/mia/current;GEM_HOME=/home/karotz/.gem nohup /usr/local/bin/ruby lib/server.rb >/home/karotz/mia/server.log 2>&1 &"
   RETVAL=$?
   echo
   return $RETVAL
