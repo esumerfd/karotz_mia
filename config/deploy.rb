@@ -19,11 +19,11 @@ role :app, "mia.bitbashers.org"
  
 server "mia.bitbashers.org", :app, :primary => true
 
-namespace :deploy do
-  task :restart, :roles => :app do
-    run "/sbin/service mia restart"
-  end
-end
+#namespace :deploy do
+  #task :restart, :roles => :app do
+    #run "/sbin/service mia restart"
+  #end
+#end
 
 task :setup do
   run "mkdir -p #{deploy_to}/releases"
