@@ -6,13 +6,7 @@ pidfile="/home/karotz/mia/mia.pid"
 
 start() {
   echo -n $"Starting Sinatra Mia: "	
-  if [ -e ${pidfile} ] && [ -e /proc/`cat ${pidfile}` ]; then
-    echo -n $"cannot start mia: it is already running.";
-    failure $"cannot start mia: it is already running.";
-    echo
-    return 1
-  fi
-  daemon --user karotz --pidfile ${pidfile} "cd /home/karotz/mia/current;/usr/local/bin/ruby lib/server.rb"
+  daemon --user karotz "cd /home/karotz/mia/current;GEM_HOME=/home/karotz/.gem /usr/local/bin/ruby lib/server.rb"
   RETVAL=$?
   echo
   return $RETVAL
@@ -20,13 +14,7 @@ start() {
 
 stop() {
   echo -n $"Stopping Sinatra Mia: "
-  if [ ! -e ${pidfile} ] || [ ! -e /proc/`cat ${pidfile}` ]; then
-    echo -n $"cannot stop mia it is not running."
-    failure $"cannot stop mia it is not running."
-    echo
-    return 1;
-  fi
-  killproc -p $pidfile
+  killproc "ruby"
   RETVAL=$?
   echo
   return $RETVAL
