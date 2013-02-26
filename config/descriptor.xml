@@ -1,0 +1,14 @@
+<descriptor>
+  <version>1.0.0</version>
+  <accesses>
+    <access>tts</access>
+    <access>button</access>
+  </accesses>
+  <apikey></apikey>
+  <deployment>external</deployment>
+  <interruptible>true</interruptible>
+  <awake>true</awake>
+  <multiConf>true</multiConf>
+  <callback>http://mia.bitbashers.org:4567/interactive_id</callback>
+</descriptor>
+
