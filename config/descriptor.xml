@@ -4,7 +4,7 @@
     <access>tts</access>
     <access>button</access>
   </accesses>
-  <apikey></apikey>
+  <apikey>25d13d57-c366-4856-b485-aa795f5f1c60</apikey>
   <deployment>external</deployment>
   <interruptible>true</interruptible>
   <awake>true</awake>

@@ -1,5 +1,13 @@
 source 'http://rubygems.org'
 
-gem "capistrano"
 gem "sinatra"
-gem "rspec"
+
+group :test do
+  gem "rspec"
+  gem "rack-test"
+end
+
+group :development do
+  gem "rake"
+  gem "capistrano"
+end
