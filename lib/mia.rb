@@ -1,6 +1,6 @@
 class Mia
   def hello
-    "hello"
+    "hello, this is Mia"
   end
 
   def interactive_id

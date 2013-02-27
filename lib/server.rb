@@ -1,11 +1,17 @@
 $:.unshift("#{File.dirname(__FILE__)}")
 
 require 'rubygems'
+
 require "sinatra"
+require "sinatra/reloader"
+
 require "mia"
 
-def "/*" do
-  Mia.new.hello
+get "/" do
+  """
+  Welcome to Mia, and world domination.
+  <br/>- Karotz talking around the world.
+  """
 end
 
 get "/hello" do

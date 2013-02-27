@@ -4,7 +4,7 @@ require "mia"
 
 describe "mia" do
   it "returns text" do
-    Mia.new.hello.should == "hello"
+    Mia.new.hello.should == "hello, this is Mia"
   end
 
   it "returns a random interactive_id" do

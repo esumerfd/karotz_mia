@@ -12,6 +12,6 @@ describe "Server" do
   it "returns hello" do
     get "/hello"
 
-    last_response.body.should include("hello")
+    last_response.body.should include("hello, this is Mia")
   end
 end
