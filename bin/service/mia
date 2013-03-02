@@ -6,7 +6,7 @@ pidfile="/home/karotz/mia/mia.pid"
 
 start() {
   echo -n $"Starting Sinatra Mia: "
-  su karotz -c "cd /home/karotz/mia/current;RACK_ENV=production GEM_HOME=/home/karotz/.gem /home/karotz/mia/current/bin/start >/home/karotz/mia/server.log 2>&1 &"
+  su karotz -c "cd /home/karotz/mia/current;RACK_ENV=production GEM_HOME=/home/karotz/.gem /home/karotz/mia/current/bin/start >/home/karotz/mia/server_start.log 2>&1 &"
   RETVAL=$?
   if [ $RETVAL -eq 0 ]; then
     success
