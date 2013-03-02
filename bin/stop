@@ -1,0 +1,21 @@
+#!/bin/bash
+#############################################################
+# stop Mia Server
+#############################################################
+
+exitCode=1
+
+# karotz   22516 22513  0 14:38 pts/0    00:00:00 ruby lib/server.rb MIA_PROCESS
+for pid in `ps -ef | grep "MIA_PROCESS" | egrep -v "grep" | awk '{ print $2 }'`; do
+  echo -n "Stopping Mia Server: ${pid}"
+  kill $pid
+  echo
+  exitCode=0
+done
+
+if [[ $exitCode -eq 1 ]]; then
+  echo "No Mia Servers running"
+fi
+
+exit $exitCode
+

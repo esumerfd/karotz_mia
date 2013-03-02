@@ -1,11 +1,50 @@
 #!/bin/bash
 #############################################################
 # start Mia Server
+#
+# To simulate a production startup:
+#
+#   RACK_ENV=production bundle exec bin/start
+#
 #############################################################
 
 binDir=`dirname $0`
 rootDir=`dirname $binDir`
 
 cd $rootDir
-ruby lib/server.rb
 
+if [[ -z $RACK_ENV ]]; then
+  bundle exec ruby lib/server.rb
+else
+
+  if [[ ! -d log ]]; then
+    echo "[ERROR] can not start with out a log directory"
+    exit 2
+  fi
+
+  # DONT START IF THERE IS ALREADY ONE RUNNING
+  ps -ef | egrep -v "grep" | grep "MIA_PROCESS" >/dev/null 2>&1
+  if [[ $? -eq 0 ]]; then
+    echo "Mia Server is already running"
+  else
+
+    # CLEAN UP LOGS
+    if [[ -d log ]]; then
+      if [[ -f log/server.log ]]; then
+        mv log/server.log log/server.`date +%Y%M%d.%H%M%S`.log
+      fi
+
+      foundLogs=0
+      ls -t log/server*.log 2>/dev/null | \
+        while read filename; do
+          if [[ $foundLogs -gt 5 ]]; then
+            rm -f $filename
+          fi
+          ((foundLogs=$foundLogs+1))
+        done
+    fi
+
+    # START MIA
+    nohup ruby lib/server.rb "MIA_PROCESS" >log/server.log 2>&1 &
+  fi
+fi
