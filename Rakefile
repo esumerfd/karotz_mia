@@ -2,20 +2,18 @@
 require 'rake/packagetask'
 require 'rake/clean'
 
-CLEAN = ["pkg"]
+CLEAN.include(["pkg"])
 
-Rake::PackageTask.new("mia", "1.0.0") do |p|
-  p.need_zip = true
-  p.package_files.include("config/descriptor.xml")
-end
+version = "1.0.0"
 
 task :zip do
   mkdir_p "pkg/files"
+  rm_f "pkg/mia.#{version}.zip"
 
-  cp "config/descriptor.xml", "pkg/files"
+  cp_r "app/*", "pkg/files"
 
   chdir("pkg/files") do
-    sh %{zip ../mia.zip descriptor.xml}
+    sh %{zip ../mia.#{version}.zip *}
   end
 
   rm_r "pkg/files"
