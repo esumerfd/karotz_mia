@@ -1,0 +1,12 @@
+#!/bin/bash
+#############################################################
+# Status of Mia Server
+#############################################################
+
+ps -ef | egrep -v "grep" | grep "MIA_PROCESS" >/dev/null 2>&1
+if [[ $? -eq 0 ]]; then
+  echo "Mia Server is running"
+else
+  echo "No Mia Server"
+fi
+

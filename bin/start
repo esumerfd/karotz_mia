@@ -13,38 +13,49 @@ rootDir=`dirname $binDir`
 
 cd $rootDir
 
+# RUN IN DEVELOPMENT MODE
 if [[ -z $RACK_ENV ]]; then
   bundle exec ruby lib/server.rb
 else
+
+  # DONT START IF THERE IS ALREADY ONE RUNNING
+  ps -ef | egrep -v "grep" | grep "MIA_PROCESS" >/dev/null 2>&1
+  if [[ $? -eq 0 ]]; then
+    echo "Mia Server is already running"
+    exit 1
+  fi
 
   if [[ ! -d log ]]; then
     echo "[ERROR] can not start with out a log directory"
     exit 2
   fi
 
-  # DONT START IF THERE IS ALREADY ONE RUNNING
-  ps -ef | egrep -v "grep" | grep "MIA_PROCESS" >/dev/null 2>&1
-  if [[ $? -eq 0 ]]; then
-    echo "Mia Server is already running"
-  else
-
-    # CLEAN UP LOGS
-    if [[ -d log ]]; then
-      if [[ -f log/server.log ]]; then
-        mv log/server.log log/server.`date +%Y%M%d.%H%M%S`.log
-      fi
-
-      foundLogs=0
-      ls -t log/server*.log 2>/dev/null | \
-        while read filename; do
-          if [[ $foundLogs -gt 5 ]]; then
-            rm -f $filename
-          fi
-          ((foundLogs=$foundLogs+1))
-        done
-    fi
-
-    # START MIA
-    nohup ruby lib/server.rb "MIA_PROCESS" >log/server.log 2>&1 &
+  # CLEAN UP LOGS
+  if [[ -f log/server.log ]]; then
+    mv log/server.log log/server.`date +%Y%M%d.%H%M%S`.log
   fi
+
+  foundLogs=0
+  ls -t log/server*.log 2>/dev/null | \
+    while read filename; do
+      if [[ $foundLogs -gt 5 ]]; then
+        rm -f $filename
+      fi
+      ((foundLogs=$foundLogs+1))
+    done
+
+  # Find Ruby interpretter
+  RUBY=`type -p ruby 2>/dev/null`
+  if [[ $? -ne 0 ]]; then
+    RUBY=/usr/local/bin/ruby
+
+    if [[ ! -x $RUBY ]]; then
+      echo "[ERROR] ruby interpretter not found."
+      exit 3
+    fi
+  fi
+
+  # START MIA
+  nohup $RUBY lib/server.rb "MIA_PROCESS" >log/server.log 2>&1 &
+  echo $!
 fi
