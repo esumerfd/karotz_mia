@@ -5,3 +5,16 @@
 </p>
 <img src='images/mia_icon.jpg'/>
 
+
+<hr/>
+<h2>Testing Stuff, Do Not Concern Yourself</h2>
+
+<p>Karotz Platform posts an interactive_id to my app.</p>
+<form action="interactive_id" method="post">
+  <input name="interactive_id" value="AN_INTERACTIVE_ID"/>
+  <button>POST IT</button>
+</form>
+
+<p>try the Web API to make the Rabbit speak using interactive id '<%= interactive_id %>'</p>
+<a href="http://api.karotz.com/api/karotz/tts?action=speak&lang=EN&text=This%20Is%20Mia&interactiveid=<%= interactive_id %>">Speak</a>
+

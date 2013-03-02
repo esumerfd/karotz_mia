@@ -6,6 +6,10 @@ CLEAN.include(["pkg"])
 
 version = "1.0.0"
 
+task :default do
+  puts "Must run with bundle exec"
+end
+
 task :zip do
   mkdir_p "pkg/files"
   rm_f "pkg/mia.#{version}.zip"
@@ -18,3 +22,6 @@ task :zip do
 
   rm_r "pkg/files"
 end
+
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:test)

@@ -9,6 +9,6 @@
   <interruptible>true</interruptible>
   <awake>true</awake>
   <multiConf>true</multiConf>
-  <callback>http://mia.bitbashers.org:4567/interactive_id</callback>
+  <callback>http://mia.bitbashers.org:4567/callback</callback>
 </descriptor>
 

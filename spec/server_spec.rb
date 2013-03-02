@@ -24,18 +24,18 @@ describe "Server" do
   end
 
   context "interactive_id request" do
-    it "returns" do
-      get "/interactive_id"
+    it "receives" do
+      post "/interactive_id"
 
-      last_response.body.should include("test_")
+      last_response.body.should include("OK")
     end
+  end
 
-    it "returns a different id each time" do
-      get "/interactive_id"
-      interactive_id = last_response.body
+  context "callback" do
+    it "accepts the install id and returns it" do
+      get "/callback?interactiveid=&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f"
 
-      get "/interactive_id"
-      last_response.body.should_not == interactive_id
+      last_response.body.should include("installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f")
     end
   end
 
