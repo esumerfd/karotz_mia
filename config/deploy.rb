@@ -7,7 +7,7 @@ set :branch, "master"
 set :deploy_via, :copy   # :remote_cache
  
 set :user , "karotz"
-set :deploy_to, "/home/karotz/#{application}"
+set :deploy_to, "/home/#{user}/#{application}"
    
 set :shared_directory, "#{deploy_to}/shared"
 set :use_sudo, false
@@ -29,3 +29,4 @@ task :setup do
   run "mkdir -p #{deploy_to}/releases"
   run "mkdir -p #{deploy_to}/shared/log"
 end
+

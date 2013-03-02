@@ -11,4 +11,6 @@ end
 group :development do
   gem "rake"
   gem "capistrano"
+  gem "sinatra-reloader"
 end
+

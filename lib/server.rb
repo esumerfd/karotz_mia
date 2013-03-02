@@ -8,17 +8,15 @@ require "sinatra/reloader"
 require "mia"
 
 get "/" do
-  """
-  Welcome to Mia, and world domination.
-  <br/>- Karotz talking around the world.
-  """
-end
-
-get "/hello" do
-  Mia.new.hello
+  erb :home
 end
 
 get "/interactive_id" do
   Mia.new.interactive_id
+end
+
+not_found do
+  status 404
+  "Hi, my name is Ed. Apparently, I haven't written any code that matches your request."
 end
 

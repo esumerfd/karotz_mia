@@ -1,0 +1,11 @@
+#!/bin/bash
+#############################################################
+# start Mia Server
+#############################################################
+
+binDir=`dirname $0`
+rootDir=`dirname $binDir`
+
+cd $rootDir
+ruby lib/server.rb
+
