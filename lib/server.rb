@@ -17,14 +17,6 @@ get "/status" do
   erb :status, :locals => {:session => session}
 end 
 
-# Request made from Karotz Central ith interactive id.
-# GET /interactive_id?interactiveid=&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f
-post "/interactive_id" do
-  session[:interactive_id] = params["interactive_id"]
-  logger.info "Received Interactive Id: #{params}"
-  "OK #{params} : #{session}"
-end
-
 # Received Interactive Id: {
 #   "<VoosMsg>
 #     <id>6ad2e28c-d972-45b4-9eb8-719dbc2ea1a9</id>
@@ -35,9 +27,21 @@ end
 #     </event>
 #    </VoosMsg>" => nil
 # }
+post "/callback" do
+  xml = request.body.read.to_s
+  logger.info "Callback with #{xml}"
+
+  "OK"
+end
+
+# GET /interactive_id?interactiveid=&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f
 get "/callback" do
   logger.info "Callback with : #{params}"
-  "installid=#{params['installid']}"
+
+  logger.info "Received Interactive Id: #{params}"
+  session[:interactive_id] = params["interactive_id"]
+
+  "OK"
 end
 
 not_found do
