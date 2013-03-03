@@ -68,6 +68,15 @@ describe "Server" do
     end
   end
 
+  context "speak" do
+    it "says something" do
+      RestClient.stub(:get) { "SOMETHING" }
+      get "/speak", {:text => "i'd like to teach the world to sing"}
+
+      last_response.body.should include("OK")
+    end
+  end
+
   context "custom 404" do
 
     it "fails with a custom 404" do

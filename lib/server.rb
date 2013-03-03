@@ -3,6 +3,7 @@ require 'rubygems'
 
 require "sinatra"
 require "sinatra/reloader"
+require 'rest-client'
 
 require "mia"
 
@@ -38,6 +39,19 @@ end
 post "/callback" do
   xml = request.body.read.to_s
   logger.info "Callback with #{xml}"
+
+  "OK"
+end
+
+get "/speak" do
+  text = params["text"]
+
+  url = "http://api.karotz.com/api/karotz/tts"
+  params = {:action => "speak", :text => text, :interactiveid => session[:interactive_id]}
+
+  result = RestClient.get url, {:params => params}
+
+  logger.info "Speak Response: #{result}"
 
   "OK"
 end
