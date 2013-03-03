@@ -1,0 +1,22 @@
+#!/bin/bash
+#############################################################
+# Tail Mia Server Log
+#############################################################
+
+binDir=`dirname $0`
+rootDir=`dirname $binDir`
+
+cd $rootDir
+
+# if the server is not running then nothing will be written to log
+ps -ef | egrep -v "grep" | grep "MIA_PROCESS" >/dev/null 2>&1
+if [[ $? -eq 0 ]]; then
+  echo "[WARNING] Mia Server is not running"
+fi
+
+if [[ ! -d log ]]; then
+  echo "[ERROR] can not start with out a log directory"
+  exit 2
+fi
+
+tail -n100 -F log/server.log
