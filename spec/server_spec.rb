@@ -74,7 +74,8 @@ describe "Server" do
     end
 
     it "says something" do
-      RestClient::Request.stub(:execute) { speak_response }
+      RestClient::Request.stub(:get) { speak_response }
+      #RestClient::Request.stub(:execute) { speak_response }
       get "/speak", {:text => "i'd like to teach the world to sing"}
 
       last_response.body.should include("OK")

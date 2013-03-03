@@ -48,7 +48,8 @@ get "/speak" do
     url = "http://api.karotz.com/api/karotz/tts"
     params = {:action => "speak", :text => text, :interactiveid => Mia.new.interactive_id}
 
-    result = RestClient::Request.execute(:method => :get, :url => url, :params => params, :timeout => 60, :open_timeout => 10)
+    result = RestClient.get url, {:params => params}
+    #result = RestClient::Request.execute(:method => :get, :url => url, :params => params, :timeout => 60, :open_timeout => 10)
 
     logger.info "Speak Response: #{result}"
 
