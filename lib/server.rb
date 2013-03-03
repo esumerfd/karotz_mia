@@ -1,5 +1,4 @@
 $:.unshift("#{File.dirname(__FILE__)}")
-
 require 'rubygems'
 
 require "sinatra"
@@ -10,12 +9,21 @@ require "mia"
 enable :sessions
 
 get "/" do
-  erb :home, :locals => {:interactive_id => session[:interactive_id] }
+  erb :home
 end
 
 get "/status" do
   erb :status, :locals => {:session => session}
 end 
+
+# Receive the interactive id of a new session
+# GET /callback?interactiveid=e5d552c1-3965-4fd3-8022-1d5adb03fab5&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f
+get "/callback" do
+  session[:interactive_id] = params["interactiveid"] if !params["interactiveid"].nil? && params["interactiveid"].length > 0
+  logger.info "Current Interactive Id: #{session[:interactive_id]}"
+
+  "OK: #{session[:interactive_id]}"
+end
 
 # Received Interactive Id: {
 #   "<VoosMsg>
@@ -30,16 +38,6 @@ end
 post "/callback" do
   xml = request.body.read.to_s
   logger.info "Callback with #{xml}"
-
-  "OK"
-end
-
-# GET /callback?interactiveid=e5d552c1-3965-4fd3-8022-1d5adb03fab5&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f
-get "/callback" do
-  logger.info "Callback with : #{params}"
-
-  logger.info "Received Interactive Id: #{params}"
-  session[:interactive_id] = params["interactive_id"]
 
   "OK"
 end
