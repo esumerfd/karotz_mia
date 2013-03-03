@@ -1,14 +1,23 @@
 <h2>Testing Stuff, Do Not Concern Yourself</h2>
 
+<hr/>
 <p>Karotz Platform posts an interactive_id to my app.</p>
-<form action="interactive_id" method="post">
-  <input name="interactive_id" value="AN_INTERACTIVE_ID"/>
-  <button>POST IT</button>
+<form action="callback" method="get">
+  <input name="interactive_id" value=""/>
+  <button>Set Interactive ID</button>
 </form>
-
-<p>Session: <%= session.keys %></p>
-
-<p>Interactive ID: '<%= session[:interactive_id] %>' : <a href="http://api.karotz.com/api/karotz/tts?action=speak&lang=EN&text=This%20Is%20Mia&interactiveid=<%= session[:interactive_id] %>">Speak</a></p>
-
+<p>OR</p>
 <p>Start the application using the Karotz website.</p>
-<a href="http://www.karotz.com/authentication/run/karotz/25d13d57-c366-4856-b485-aa795f5f1c60">START</a>
+<a target="_blank" href="http://www.karotz.com/authentication/run/karotz/25d13d57-c366-4856-b485-aa795f5f1c60">START</a>
+<hr/>
+<p>Interactive ID: '<%= session[:interactive_id] %>'</p>
+<hr/>
+<p>Stop the application:<br/>
+  <a target="_blank" href="http://api.karotz.com/api/karotz/interactivemode?action=stop&interactiveid=<%= session[:interactive_id] %>">Stop</a>
+</p>
+<hr/>
+<p>Say something:<br/>
+  <a target="_blank" href="http://api.karotz.com/api/karotz/tts?action=speak&text=it%20is%20a%20small%20world%20after%20all&interactiveid=<%= session[:interactive_id] %>">Speak</a>
+</p>
+
+

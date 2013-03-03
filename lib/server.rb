@@ -34,7 +34,7 @@ post "/callback" do
   "OK"
 end
 
-# GET /interactive_id?interactiveid=&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f
+# GET /callback?interactiveid=e5d552c1-3965-4fd3-8022-1d5adb03fab5&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f
 get "/callback" do
   logger.info "Callback with : #{params}"
 
