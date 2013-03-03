@@ -1,0 +1,12 @@
+<h2>Testing Stuff, Do Not Concern Yourself</h2>
+
+<p>Karotz Platform posts an interactive_id to my app.</p>
+<form action="interactive_id" method="post">
+  <input name="interactive_id" value="AN_INTERACTIVE_ID"/>
+  <button>POST IT</button>
+</form>
+
+<p>Session: <%= session.keys %></p>
+
+<p>Interactive ID: '<%= session[:interactive_id] %>' : <a href="http://api.karotz.com/api/karotz/tts?action=speak&lang=EN&text=This%20Is%20Mia&interactiveid=<%= session[:interactive_id] %>">Speak</a></p>
+

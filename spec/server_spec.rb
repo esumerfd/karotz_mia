@@ -31,6 +31,14 @@ describe "Server" do
     end
   end
 
+  context "status request" do
+    it "retrieves session information" do
+      get "/status"
+
+      last_response.body.should include("Interactive ID")
+    end
+  end
+
   context "callback" do
     it "accepts the install id and returns it" do
       get "/callback?interactiveid=&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f"
