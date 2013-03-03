@@ -44,16 +44,21 @@ post "/callback" do
 end
 
 get "/speak" do
-  text = params["text"]
+  begin
+    text = params["text"]
 
-  url = "http://api.karotz.com/api/karotz/tts"
-  params = {:action => "speak", :text => text, :interactiveid => session[:interactive_id]}
+    url = "http://api.karotz.com/api/karotz/tts"
+    params = {:action => "speak", :text => text, :interactiveid => session[:interactive_id]}
 
-  result = RestClient.get url, {:params => params}
+    result = RestClient::Request.execute(:method => :get, :url => url, :params => params, :timeout => 60, :open_timeout => 10)
 
-  logger.info "Speak Response: #{result}"
+    logger.info "Speak Response: #{result}"
 
-  "OK"
+    "OK"
+  rescue RestClient::ServerBrokeConnection => message
+    logger.info "Failed to speak. May still work though: #{message}"
+    "FAILED"
+  end
 end
 
 not_found do

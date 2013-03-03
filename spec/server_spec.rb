@@ -69,8 +69,12 @@ describe "Server" do
   end
 
   context "speak" do
+    let(:speak_response) do
+      """VoosMsg><id>c86c5df2-b3b4-48d1-936c-b13eaa15a70e</id><correlationId>ce85bb34-788b-4be5-98f0-e8a6ebe20c6a</correlationId><interactiveId>585baf1f-5bc2-4cb6-81c0-84b985cc40e6</interactiveId><callback>http://mia.bitbashers.org:4567/callback</callback><response><code>OK</code></response></VoosMsg>"""
+    end
+
     it "says something" do
-      RestClient.stub(:get) { "SOMETHING" }
+      RestClient::Request.stub(:execute) { speak_response }
       get "/speak", {:text => "i'd like to teach the world to sing"}
 
       last_response.body.should include("OK")
