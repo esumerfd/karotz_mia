@@ -7,23 +7,21 @@ require 'rest-client'
 
 require "mia"
 
-enable :sessions
-
 get "/" do
   erb :home
 end
 
 get "/status" do
-  erb :status, :locals => {:session => session}
+  erb :status, :locals => {:session => {:interactive_id => Mia.new.interactive_id}}
 end 
 
 # Receive the interactive id of a new session
 # GET /callback?interactiveid=e5d552c1-3965-4fd3-8022-1d5adb03fab5&installid=a63e84a3-8e16-44f7-9db6-bcef55dfc61f
 get "/callback" do
-  session[:interactive_id] = params["interactiveid"] if !params["interactiveid"].nil? && params["interactiveid"].length > 0
-  logger.info "Current Interactive Id: #{session[:interactive_id]}"
+  Mia.new.interactive_id = params["interactiveid"] if !params["interactiveid"].nil? && params["interactiveid"].length > 0
+  logger.info "Current Interactive Id: #{Mia.new.interactive_id}"
 
-  "OK: #{session[:interactive_id]}"
+  "OK: #{Mia.new.interactive_id}"
 end
 
 # Received Interactive Id: {
@@ -48,7 +46,7 @@ get "/speak" do
     text = params["text"]
 
     url = "http://api.karotz.com/api/karotz/tts"
-    params = {:action => "speak", :text => text, :interactiveid => session[:interactive_id]}
+    params = {:action => "speak", :text => text, :interactiveid => Mia.new.interactive_id}
 
     result = RestClient::Request.execute(:method => :get, :url => url, :params => params, :timeout => 60, :open_timeout => 10)
 
