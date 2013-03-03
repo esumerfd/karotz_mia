@@ -1,5 +1,5 @@
 <descriptor>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <accesses>
     <access>tts</access>
     <access>button</access>
