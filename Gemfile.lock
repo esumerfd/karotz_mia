@@ -11,11 +11,12 @@ GEM
     diff-lcs (1.2.1)
     eventmachine (1.0.1)
     highline (1.6.15)
+    mime-types (1.21)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.6.5)
+    net-ssh (2.6.6)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     rack (1.5.2)
@@ -24,6 +25,8 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.0.3)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -54,6 +57,7 @@ DEPENDENCIES
   capistrano
   rack-test
   rake
+  rest-client
   rspec
   sinatra
   sinatra-contrib
