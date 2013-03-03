@@ -14,7 +14,7 @@ task :zip do
   mkdir_p "pkg/files"
   rm_f "pkg/mia.#{version}.zip"
 
-  cp_r "app/*", "pkg/files"
+  cp_r FileList["app/*"], "pkg/files", :verbose => true
 
   chdir("pkg/files") do
     sh %{zip ../mia.#{version}.zip *}
